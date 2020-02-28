@@ -56,20 +56,21 @@ import com.sma.sprintTwo.agents.*;
 
 public class Home implements EventHandler {
 	// Attribute
-	private TextField userInput, passInput;
 	private Label info;
-	private Button btnSend, btnLogout, btnFileChoose;
+	private Button btnSend, btnLogout, btnFileChoose, btnGoogleSearch;
 	private ComboBox destinationList;
 	private FileInputStream input;
 	private javafx.scene.image.Image image;
-	private ImageView iconFile;
+	private ImageView iconGoogle;
 	private Label Title, userLabel, labelDistination, labelSearchFile, labelMessage, labelReception, labelPathFile;
 	private Stage primaryStage;
 	private TextArea msgArea;
+	private TextField tfGoogleSearch;
 	// ********************************************************************
 	private UserAgent userAgent;
 	ObservableList<Message> messageList;
 	ObservableList<String> contactList;
+	ObservableList<String> searchRsult;
 	AID[] aidContacts;
 	File fileChosed = null;
 
@@ -77,6 +78,15 @@ public class Home implements EventHandler {
 		startContainer(user.getUsername(), user.getCommunaute());
 		messageList = FXCollections.observableArrayList();
 		contactList = FXCollections.observableArrayList();
+		searchRsult = FXCollections.observableArrayList();
+		VBox vbox = new VBox();
+		GridPane gridPane = new GridPane();
+		ListView<Message> listViewMessage = new ListView<Message>(messageList);
+
+		VBox vboxGoogle = new VBox();
+		GridPane gridPaneGoogle = new GridPane();
+		ListView<String> listViewGoogle = new ListView<String>(searchRsult);
+
 		// initialize stage from calling from another window
 		primaryStage = new Stage();
 		primaryStage.setTitle("Home");
@@ -84,8 +94,6 @@ public class Home implements EventHandler {
 		Group root = new Group();
 		Scene scene = new Scene(root, 700, 500);
 		// initialize attribute
-		userInput = new TextField();
-		passInput = new TextField();
 		info = new Label("");
 		userLabel = new Label("User : " + user.getUsername());
 		Title = new Label("Project\nFundamentals of Business\n Process Management");
@@ -101,35 +109,28 @@ public class Home implements EventHandler {
 		btnLogout = new Button("Logout");
 		destinationList = new ComboBox();
 
-		destinationList.getItems().add("distination");
+		btnGoogleSearch = new Button("search");
+		tfGoogleSearch = new TextField();
 
-//        List<User> listCollegue = this.getmyCommunauteCollegue(user);
-//        
-//        for(User u:listCollegue) {
-//        	destinationList.getItems().add(""+u.getUsername());
-//        }
-
-//        destinationList.getSelectionModel().select("distination");
+		listViewMessage.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Message>() {
+			public void changed(ObservableValue<? extends Message> observable, Message oldValue, Message newValue) {
+				System.out.println("selection changed: " + newValue);
+			}
+		});
 		destinationList.setItems(contactList);
 		// load icons
-		input = new FileInputStream("resources/file.png");
+		input = new FileInputStream("resources/google.png");
 		image = new javafx.scene.image.Image(input);
-		iconFile = new ImageView(image);
+		iconGoogle = new ImageView(image);
 
 		// Background
 		Rectangle rect = new Rectangle(0, 0, 350, 500);
-		rect.setFill(Color.web("#0598ff", 1));
+		rect.setFill(Color.web("#AAAAAA", 1));
 
 		// Personalization
-		userInput.setPromptText("Username");
-		passInput.setPromptText("Password");
 
-		userInput
-				.setStyle("-fx-background-color:transparent;-fx-border-color:#0598ff;-fx-border-width:0px 0px 2px 0px");
 		destinationList.setStyle("-fx-background-color:transparent;-fx-border-color:#0598ff;");
 		destinationList.setPrefWidth(150);
-		passInput
-				.setStyle("-fx-background-color:transparent;-fx-border-color:#0598ff;-fx-border-width:0px 0px 2px 0px");
 
 		btnSend.setStyle("-fx-background-color: #0598ff;-fx-text-fill: #ffffff");
 		btnSend.setFont(new Font("Consolas", 16));
@@ -159,7 +160,6 @@ public class Home implements EventHandler {
 		labelPathFile.setStyle("-fx-text-fill: #000000");
 		labelPathFile.setPrefWidth(350);
 		labelPathFile.setMaxWidth(350);
-		// labelPathFile.setWrapText(true);
 		labelPathFile.setPrefHeight(30);
 
 		info.setStyle("-fx-text-fill: #ff0000");
@@ -171,27 +171,31 @@ public class Home implements EventHandler {
 		msgArea.setPrefWidth(320);
 		msgArea.setPrefHeight(60);
 
+		iconGoogle.setFitWidth(300);
+		iconGoogle.setFitHeight(200);
+
+		btnGoogleSearch.setStyle("-fx-background-color: #ffffff ;-fx-text-fill: #0598ff");
+		btnGoogleSearch.setFont(new Font("System", 16));
+
+		tfGoogleSearch.setPromptText("write something...");
+		tfGoogleSearch.setPrefWidth(250);
+		tfGoogleSearch.setPrefHeight(40);
+
 		// set Position
-		userInput.setLayoutX(450);
-		userInput.setLayoutY(160);
-
-		passInput.setLayoutX(450);
-		passInput.setLayoutY(260);
-
 		btnSend.setLayoutX(630);
-		btnSend.setLayoutY(5);
+		btnSend.setLayoutY(245);
 
 		btnLogout.setLayoutX(10);
 		btnLogout.setLayoutY(10);
 
 		destinationList.setLayoutX(540);
-		destinationList.setLayoutY(67);
+		destinationList.setLayoutY(47);
 
 		labelDistination.setLayoutX(364);
-		labelDistination.setLayoutY(67);
+		labelDistination.setLayoutY(47);
 
 		info.setLayoutX(400);
-		info.setLayoutY(370);
+		info.setLayoutY(350);
 
 		userLabel.setLayoutX(370);
 		userLabel.setLayoutY(10);
@@ -199,53 +203,66 @@ public class Home implements EventHandler {
 		Title.setLayoutX(5);
 		Title.setLayoutY(200);
 
-		iconFile.setLayoutX(100);
-		iconFile.setLayoutY(50);
+		iconGoogle.setLayoutX(25);
+		iconGoogle.setLayoutY(0);
 
 		labelSearchFile.setLayoutX(363);
-		labelSearchFile.setLayoutY(108);
+		labelSearchFile.setLayoutY(88);
 
 		btnFileChoose.setLayoutX(550);
-		btnFileChoose.setLayoutY(108);
+		btnFileChoose.setLayoutY(88);
 
 		labelPathFile.setLayoutX(363);
-		labelPathFile.setLayoutY(150);
+		labelPathFile.setLayoutY(130);
 
 		labelMessage.setLayoutX(363);
-		labelMessage.setLayoutY(169);
+		labelMessage.setLayoutY(149);
 
 		msgArea.setLayoutX(363);
-		msgArea.setLayoutY(200);
+		msgArea.setLayoutY(180);
 
 		labelReception.setLayoutX(363);
 		labelReception.setLayoutY(260);
+
+		tfGoogleSearch.setLayoutX(10);
+		tfGoogleSearch.setLayoutY(150);
+
+		btnGoogleSearch.setLayoutX(265);
+		btnGoogleSearch.setLayoutY(150);
+
 		// Add Event to button
 		btnSend.setOnAction(this);
 		btnLogout.setOnAction(this);
 		btnFileChoose.setOnAction(this);
+		btnGoogleSearch.setOnAction(this);
 
 		// boite de reception
-		VBox vbox = new VBox();
-		GridPane gridPane = new GridPane();
-		ListView<Message> listViewMessage = new ListView<Message>(messageList);
 		gridPane.add(listViewMessage, 0, 0);
 		// vbox.setPadding(new Insets(10));
 		// vbox.setSpacing(10);
 		vbox.getChildren().add(gridPane);
 		vbox.setLayoutX(369);
 		vbox.setLayoutY(300);
-		vbox.setPrefHeight(150);
+		vbox.setPrefHeight(190);
 		vbox.setPrefWidth(450);
+
+		// affichage resultat de la recherche
+		gridPaneGoogle.add(listViewGoogle, 0, 0);
+		vboxGoogle.getChildren().add(gridPaneGoogle);
+		vboxGoogle.setLayoutX(15);
+		vboxGoogle.setLayoutY(200);
+		vboxGoogle.setPrefHeight(290);
+		vboxGoogle.setPrefWidth(450);
 
 		// add child
 		root.getChildren().add(rect);
-		root.getChildren().add(iconFile);
+		root.getChildren().add(iconGoogle);
 		root.getChildren().add(btnSend);
 		root.getChildren().add(info);
 		root.getChildren().add(destinationList);
 		root.getChildren().add(userLabel);
 		root.getChildren().add(labelDistination);
-		root.getChildren().add(Title);
+		// root.getChildren().add(Title);
 		root.getChildren().add(btnLogout);
 		root.getChildren().add(labelSearchFile);
 		root.getChildren().add(labelPathFile);
@@ -254,18 +271,13 @@ public class Home implements EventHandler {
 		root.getChildren().add(labelReception);
 		root.getChildren().add(btnFileChoose);
 		root.getChildren().add(vbox);
+		root.getChildren().add(tfGoogleSearch);
+		root.getChildren().add(btnGoogleSearch);
+		root.getChildren().add(vboxGoogle);
 		// Set scene and show stage
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
-		listViewMessage.getSelectionModel().selectedItemProperty()
-		.addListener(new ChangeListener<Message>() {
-          public void changed(ObservableValue<? extends Message> observable,
-              Message oldValue, Message newValue) {
-            System.out.println("selection changed: "+newValue);  
-          }
-        });
-		
+
 	}
 
 	@Override
@@ -316,6 +328,9 @@ public class Home implements EventHandler {
 				alert.showAndWait();
 			}
 
+		}else if(event.getSource() == btnGoogleSearch) {
+			String requette = tfGoogleSearch.getText().toString();
+			userAgent.googleSearch(requette);
 		}
 
 	}
@@ -386,6 +401,12 @@ public class Home implements EventHandler {
 			}
 			// supprimer les contacts qui ne sonte pas dans la nouvelle liste
 		}
+	}
+	
+	public void afficherGoogleResults(GuiEvent guiEvent) {
+		List<String> links = (List<String>) guiEvent.getParameter(0);
+		searchRsult.clear();
+		searchRsult.addAll(links);
 	}
 
 	public AID findAidByName(String name) {

@@ -14,6 +14,7 @@ import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.util.leap.Properties;
 import jade.wrapper.AgentContainer;
+import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
 import javafx.application.Application;
 
@@ -180,6 +181,12 @@ public class Login extends Application implements EventHandler {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
+		try {
+			new Home(new User("Nasr", "1234","Math"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Events
@@ -235,6 +242,7 @@ public class Login extends Application implements EventHandler {
 	}
 
 	public static void main(String[] args) {
+		// deployer le main container
 		try {
 			Runtime runtime = Runtime.instance();
 			Properties properties = new Properties();
@@ -244,6 +252,19 @@ public class Login extends Application implements EventHandler {
 			mainContainer.start();
 		} catch (ControllerException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// deployer google container
+		try {
+			Runtime runtime = Runtime.instance();
+			Profile profile = new ProfileImpl(false);
+			profile.setParameter(Profile.MAIN_HOST, "localhost");
+			AgentContainer userContainer = runtime.createAgentContainer(profile);
+			AgentController userController = userContainer.createNewAgent("google", "com.sma.sprintTwo.agents.GoogleAgent",
+					new Object[] {});
+			userController.start();
+
+		} catch (ControllerException e) {
 			e.printStackTrace();
 		}
 		launch(args);

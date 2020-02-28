@@ -2,6 +2,7 @@ package com.sma.sprintTwo.agents;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import com.sma.sprintTwo.containers.UserContainer;
 import com.sma.sprintTwo.ui.Home;
@@ -181,6 +182,18 @@ public class UserAgent extends GuiAgent {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+					}else if (msg.getPerformative() == ACLMessage.AGREE) { // reception d'une reponse de google
+						try {
+							List<String> links =(List<String>) msg.getContentObject();
+							for(String s : links) {
+								System.out.println("nasro: "+s);
+							}
+							GuiEvent guiEvent = new GuiEvent(this, 1);
+							guiEvent.addParameter(links);
+							gui.afficherGoogleResults(guiEvent);
+						} catch (UnreadableException e) {
+							e.printStackTrace();
+						}
 					}
 				} else {// si il y a pas de message reste blocker jusqu'a l'arriver d'un message
 					block();
@@ -223,6 +236,13 @@ public class UserAgent extends GuiAgent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void googleSearch(String requette) {
+		ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+		msg.setContent(requette);
+		msg.addReceiver(new AID("google", false));
+		send(msg);
 	}
 
 }
