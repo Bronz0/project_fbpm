@@ -5,21 +5,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import javax.swing.ListModel;
+
 
 import com.sma.entitee.User;
 import com.sma.sprintOne.service.SocialNetwork;
-import com.sprintOne.ui.Login;
 
 import core.Message;
 import jade.core.AID;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
-import jade.core.event.MessageAdapter;
 import jade.gui.GuiEvent;
 import jade.lang.acl.ACLMessage;
 import jade.wrapper.AgentContainer;
@@ -31,7 +29,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,7 +40,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -60,7 +57,7 @@ public class Home implements EventHandler {
 	private Button btnSend, btnLogout, btnFileChoose, btnGoogleSearch;
 	private ComboBox destinationList;
 	private FileInputStream input;
-	private javafx.scene.image.Image image;
+	private Image image;
 	private ImageView iconGoogle;
 	private Label Title, userLabel, labelDistination, labelSearchFile, labelMessage, labelReception, labelPathFile;
 	private Stage primaryStage;

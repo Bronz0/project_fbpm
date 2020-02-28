@@ -30,6 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -42,7 +43,7 @@ public class Login extends Application implements EventHandler {
 	private Button btnLogin, btnSignUp;
 	private Label info;
 	private FileInputStream input;
-	private javafx.scene.image.Image image;
+	private Image image;
 	private ImageView iconGroup, iconUser, iconKey, iconFile;
 	private Label Title;
 	private Stage primaryStage;
@@ -83,19 +84,19 @@ public class Login extends Application implements EventHandler {
 		btnSignUp = new Button("Don't have an account ? SignUp");
 		// load Icons
 		input = new FileInputStream("resources/team.png");
-		image = new javafx.scene.image.Image(input);
+		image = new Image(input);
 		iconGroup = new ImageView(image);
 
 		input = new FileInputStream("resources/user.png");
-		image = new javafx.scene.image.Image(input);
+		image = new Image(input);
 		iconUser = new ImageView(image);
 
 		input = new FileInputStream("resources/key.png");
-		image = new javafx.scene.image.Image(input);
+		image = new Image(input);
 		iconKey = new ImageView(image);
 
 		input = new FileInputStream("resources/file.png");
-		image = new javafx.scene.image.Image(input);
+		image = new Image(input);
 		iconFile = new ImageView(image);
 
 		// set Background Blue left half
@@ -181,12 +182,6 @@ public class Login extends Application implements EventHandler {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		try {
-			new Home(new User("Nasr", "1234","Math"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	// Events
