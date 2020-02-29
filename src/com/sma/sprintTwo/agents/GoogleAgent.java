@@ -16,15 +16,15 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class GoogleAgent extends Agent {
-
-	// TODO: private GoogleContainer gui;
-
+/**
+ * @author M. BOUDISSA, github.com/bronz0
+ *
+ */
+public class GoogleAgent extends Agent { 
 	@Override
 	protected void setup() {
 		ParallelBehaviour behaviour = new ParallelBehaviour();
 		behaviour.addSubBehaviour(new CyclicBehaviour() {
-
 			@Override
 			public void action() {
 				ACLMessage message = receive();
@@ -62,7 +62,6 @@ public class GoogleAgent extends Agent {
 						}
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return links;

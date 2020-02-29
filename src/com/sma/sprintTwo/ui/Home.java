@@ -295,29 +295,26 @@ public class Home implements EventHandler {
 			this.primaryStage.close();
 			// new Login(true);
 		} else if (event.getSource() == btnSend) {
-
 			if (destinationList.getValue() != null) { // il y a un destinataire
 				if (fileChosed != null || !msgArea.getText().equals("")) {
-					if (!msgArea.getText().equals("")) {// si il ya un message
+					if (!msgArea.getText().equals("")) {// il ya un message
 						String content = msgArea.getText();
 						String name = destinationList.getValue().toString();
 						AID receiver = findAidByName(name);
 						userAgent.sendMessage(content, receiver);
 					}
-
 					if (fileChosed != null) {// il y a un fichier
 						String name = destinationList.getValue().toString();
 						AID receiver = findAidByName(name);
 						userAgent.sendFile(fileChosed, receiver);
 					}
-				} else {
+				} else { // pas de message et pas de fichier 
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText("*Problème*");
 					alert.setContentText("chose a file or write a message !");
 					alert.showAndWait();
 				}
-
 			} else { // pas de destinataire
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
@@ -325,7 +322,6 @@ public class Home implements EventHandler {
 				alert.setContentText("reviever name is empty!");
 				alert.showAndWait();
 			}
-
 		}else if(event.getSource() == btnGoogleSearch) {
 			String requette = tfGoogleSearch.getText().toString();
 			userAgent.googleSearch(requette);
@@ -402,7 +398,7 @@ public class Home implements EventHandler {
 			
 		}
 	}
-
+	
 	public void updateListContacts(GuiEvent guiEvent) {
 		aidContacts = (AID[]) guiEvent.getParameter(0);
 		for (AID aid : aidContacts) {
@@ -458,7 +454,6 @@ public class Home implements EventHandler {
 		try {
 			out = new FileOutputStream("fichier/new.pdf");// this path["new.pdf"] mean in this project
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -466,7 +461,6 @@ public class Home implements EventHandler {
 			try {
 				out.write(bs[i]);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
