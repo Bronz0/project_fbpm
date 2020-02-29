@@ -188,7 +188,7 @@ public class Login extends Application implements EventHandler {
 	@Override
 	public void handle(Event event) {
 		if (event.getSource() == btnLogin) {
-			if (userInput.getText().equals("") || passInput.equals("")) {
+			if (userInput.getText().length()==0 || passInput.getText().length()==0) {
 
 				info.setStyle("-fx-text-fill: #ff0000");
 				info.setText("username or password is empty !!");

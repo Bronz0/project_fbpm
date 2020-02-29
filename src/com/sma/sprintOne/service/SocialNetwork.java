@@ -8,12 +8,11 @@ import java.util.Map;
 import com.sma.entitee.User;
 
 public class SocialNetwork  {
-
 	private static final Map<Integer,User> usrMap= new HashMap <Integer, User> ();
 	
 	static {
-		usrMap.put(1, new User (1,"Mohamed","1234","Math"));
-		usrMap.put(2, new User (2,"Nasr","1234","Math"));
+		usrMap.put(1,new User (1,"Mohamed","1234","Math"));
+		usrMap.put(2,new User (2,"Nasr","1234","Math"));
 		usrMap.put(3,new User (3,"Zaki","1234","Informatique"));
 		usrMap.put(4,new User (4,"Abdallah","1234","Informatique"));
 	}

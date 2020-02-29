@@ -183,7 +183,7 @@ public class SignUp implements EventHandler {
 	@Override
 	public void handle(Event event) {
 		if(event.getSource()== btnSignUp) {// Sign Up Button
-			if(userInput.getText().equals("") || passInput.equals("") || communauteList.getValue().toString().equals("communaute")) {// one off input is empty
+			if(userInput.getText().length()==0 || passInput.getText().length()==0 || communauteList.getValue().toString().equals("communaute")) {// one off input is empty
 				
 				info.setStyle("-fx-text-fill: #ff0000");
 				info.setText("username or password or communaute is empty !!");
