@@ -5,7 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.nio.file.Files;
+import java.util.Date;
 import java.util.List;
 
 
@@ -122,7 +123,7 @@ public class Home implements EventHandler {
 
 		// Background
 		Rectangle rect = new Rectangle(0, 0, 350, 500);
-		rect.setFill(Color.web("#AAAAAA", 1));
+		rect.setFill(Color.web("#e1f7f7", 1));
 
 		// Personalization
 
@@ -381,7 +382,24 @@ public class Home implements EventHandler {
 			File file = (File) guiEvent.getParameter(0);
 			Message message = (Message) guiEvent.getParameter(2);
 			messageList.add(message);
-			System.out.println("reception d'un fichier: " + file.getName());
+			System.out.println("reception d'un fichier: " + file.getName().split("@")[0]);
+			String sender = message.getSernder();
+			String fileName = message.getContent();
+			String receiver = userAgent.getName().split("@")[0];
+			
+			
+			String newPath = sender+"_"+fileName;
+			boolean created = false;
+			created = new File("sheared_files\\"+receiver).mkdir();
+			System.out.println("created = "+created);
+			File newFile=new File("sheared_files\\"+receiver+"\\"+newPath);
+			try {
+				System.out.println(newPath);
+				Files.copy(file.toPath(), newFile.toPath());
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			
 		}
 	}
 

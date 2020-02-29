@@ -249,7 +249,7 @@ public class Login extends Application implements EventHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// deployer google container
+		// deployer un container pour l'agent google
 		try {
 			Runtime runtime = Runtime.instance();
 			Profile profile = new ProfileImpl(false);
@@ -262,6 +262,7 @@ public class Login extends Application implements EventHandler {
 		} catch (ControllerException e) {
 			e.printStackTrace();
 		}
+		// afficher l'interface graphique
 		launch(args);
 
 	}
